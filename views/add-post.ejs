@@ -41,52 +41,39 @@
 
       <hr class="mt-2" />
 
-      <nav class="container mx-auto px-2 flex justify-between items-center">
-        <a href="/" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ant-design:home-outlined"
-          ></span>
-        </a>
-        <a href="/messages.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ri:messenger-line"
-          ></span>
-        </a>
-        <a href="/notifications.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ic:baseline-notifications-none"
-          ></span>
-        </a>
-        <a href="/add-post" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 text-blue-400 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ic:baseline-post-add"
-          ></span>
-        </a>
+      <nav class="container mx-auto px-2 flex justify-between items-center
+      ">
+            <a href="/index" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 text-blue-400
+                hover:text-gray-700 "" data-inline=" false" data-icon="ant-design:home-outlined"></span>
+            </a>
+            <a href="/messages" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ri:messenger-line"></span>
+            </a>
+          
+            <a href="/add-post" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ic:baseline-post-add"></span>
+            </a>
 
-        <a href="/settings.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="gridicons:menu"
-          ></span>
-        </a>
-      </nav>
+            <a href="/settings" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="gridicons:menu"></span>
+            </a>
+        </nav>
     </header>
 
     <div class="max-w-xl mx-auto px-2 mt-4">
-      <form class="bg-white shadow-lg rounded-lg py-4 px-6">
+      <form action="/add-post" class="bg-white shadow-lg rounded-lg py-4 px-6" method="POST" enctype="multipart/form-data">
         <h1 class="text-2xl font-bold text-center">ajouter un nouveau post</h1>
+        <% if (locals.msg) { %>
+         <span><%= msg %> </span>
+        <% } %>
         <div class="py-2 mx-auto">
           <span class="px-1 text-sm text-gray-600">Titre</span>
           <input
+          name="titre"
             placeholder=""
             type="text"
             class="text-md block px-3 py-2 rounded-lg w-full bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
@@ -96,6 +83,7 @@
         <div class="py-2 mx-auto">
           <span class="px-1 text-sm text-gray-600">Contenu</span>
           <textarea
+          name="contenu"
             placeholder=""
             type="text"
             class="text-md resize-none block px-1 py-2 rounded-lg w-full bg-white border-2 border-gray-300 shadow-md focus:bg-white focus:border-gray-600 focus:outline-none"
@@ -118,7 +106,7 @@
             <span class="mt-2 text-base leading-normal"
               >Ajouter une photo
             </span>
-            <input type="file" class="hidden" />
+            <input type="file" class="hidden"  name="myImage"  accept="image/png, image/jpeg"/>
           </label>
         </div>
 
@@ -133,4 +121,3 @@
     </div>
   </body>
 </html>
-

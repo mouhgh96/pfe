@@ -1,0 +1,191 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/tailwind.css" />
+    <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+  </head>
+
+  <body class="bg-gray-100 relative">
+    <header class="pt-2 bg-white primary-shadow">
+        <div class="container mx-auto px-2">
+            <div class="flex justify-between items-center">
+                <div class="logo h-12 w-12
+                rounded-full border border-blue-400 p-2">
+                    <img src="/image/logo.png" alt="pfe logo">
+                </div>
+                <div class="flex-1 mx-8"><input class="border-gray-500 border px-1 py-1 bg-gray-300 w-full" type="search" name="filter" id="filter" placeholder="Recherche ...">
+                </div>
+                <div class="logo h-12 w-12
+                rounded-full border border-blue-400 overflow-hidden"><img src="/image/profile.jpg" alt="pfe logo">
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-2">
+
+        <nav class="container mx-auto px-2 flex justify-between items-center
+      ">
+            <a href="/index" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 text-blue-400
+                hover:text-gray-700 "" data-inline=" false" data-icon="ant-design:home-outlined"></span>
+            </a>
+            <a href="/messages" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ri:messenger-line"></span>
+            </a>
+          
+            <a href="/add-post" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ic:baseline-post-add"></span>
+            </a>
+
+            <a href="/settings" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="gridicons:menu"></span>
+            </a>
+        </nav>
+    </header>
+<% if (locals.post) { %>
+    <div class="mt-4">
+		<% if (locals.post.path) { %>
+		<section class="h-64 flex justify-center">
+		<img
+          src=`<%= locals.post.path %> `
+          alt=" "
+          class="object-contain object-center h-full"
+        />
+	  </section>
+	  <% } %>
+      <article class="p-2 container mx-auto px-2">
+        <a
+          href=" #lien pour le post "
+          class="block text-2xl font-bold truncate"
+          title=" ajoute le titre du
+                post ici ou cas ou le titre est trop long pour une ligne "
+          ><%= locals.post.title %> </a
+        >
+        <div class="flex items-center mt-2">
+          <div
+            class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
+          >
+            <img
+              class="object-center"
+              src="https://randomuser.me/api/portraits/men/75.jpg"
+              alt=" profile "
+            />
+          </div>
+          <div class="info ml-2 flex flex-col items-start justify-center">
+            <p class="text-xl font-semibold leading-5"><%= locals.post.firstname %>  <%= locals.post.lastname %></p>
+            <span class="text-xs text-gray-600"
+              >Le <%= locals.post.date %>  à <%= locals.post.time %> </span
+            >
+          </div>
+          <div class="ml-auto">
+            <a
+              href=" #lien_pour_le_post "
+              class="block t text-blue-400 py-1 px-4 font-black tracking-wider rounded-lg text-xl"
+            >
+              Specialité
+            </a>
+          </div>
+        </div>
+
+        <main class="py-2 text-gray-800">
+          <%= locals.post.text %> 
+        </main>
+      </article>
+    </div>
+    <hr class="mt-4">
+<!-- comments container -->
+		<div class="comment_block container mx-auto p-2 ">
+
+		<!-- 
+			Comments are structured in the following way:
+
+			{ul} defines a new comment (singular)
+			{li} defines a new reply to the comment {ul}
+
+			example:
+
+			<ul>
+				<comment>
+					
+				</comment
+
+					<li>
+						<reply>
+
+						</reply>
+					</li>
+
+					<li>
+						<reply>
+
+						</reply>
+					</li>
+
+					<li>
+						<reply>
+
+						</reply>
+					</li>
+			</ul>
+
+		 -->
+
+		 <!-- used by #{user} to create a new comment -->
+		 <div class="create_new_comment">
+
+			<!-- current #{user} avatar -->
+		 	<div class="user_avatar">
+		 		<img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
+		 	</div><!-- the input field --><div class="input_comment">
+				
+				<!-- le formulaire manquait et le button submit également(à styliser) --> 
+				<form action="" method="POST">
+					<input type="text" name="commentText" placeholder="Ajouter un commentaire">
+					<button type="submit">Submit</button>
+				 </form>
+		 	</div>
+
+		 </div>
+		 <% if (locals.comments) { %>
+		  <% for( let index = 0; index < comments.length; index++ ) { %>
+			<div class="new_comment">
+				<!-- build comment -->
+				 <ul class="user_comment">
+					 <!-- current #{user} avatar -->
+					 <!-- comments toolbar -->
+					 <!-- start user replies -->
+				 <li>
+					 <!-- current #{user} avatar -->
+					 <div class="user_avatar">
+						 <img src="https://s3.amazonaws.com/uifaces/faces/twitter/manugamero/73.jpg">
+					 </div><!-- the comment body --><div class="comment_body">
+						 <p><div class="replied_to"><p><span class="user"><%= locals.comments[index].firstname %> <%= locals.comments[index].lastname %> :</span>
+						<%= locals.comments[index].text %> 	
+						</p></div></p>
+					 </div>
+					 <!-- comments toolbar -->
+					 <div class="comment_toolbar">
+	
+						 <!-- inc. date and time -->
+						 <div class="comment_details">
+							 <ul>
+								 <li><i class="fa fa-clock-o"></i> <%= locals.comments[index].time %></li>
+								 <li><i class="fa fa-calendar"></i> <%= locals.comments[index].date %></li>
+							 </ul>
+						 </div><!-- inc. share/reply and love -->
+					 </div>
+	
+	
+				 </li>
+				</div>
+		  <% } %>
+		 <% } %>
+		<% } %>
+  </body>
+</html>
+

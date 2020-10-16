@@ -39,46 +39,29 @@
 
       <hr class="mt-2" />
 
-      <nav class="container mx-auto px-2 flex justify-between items-center">
-        <a href="/" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ant-design:home-outlined"
-          ></span>
-        </a>
-        <a href="/messages.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ri:messenger-line"
-          ></span>
-        </a>
-        <a href="/notifications.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ic:baseline-notifications-none"
-          ></span>
-        </a>
-        <a href="/add-post" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600  hover:text-gray-700"
-            data-inline=" false"
-            data-icon="ic:baseline-post-add"
-          ></span>
-        </a>
+      <nav class="container mx-auto px-2 flex justify-between items-center
+      ">
+            <a href="/index" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 text-blue-400
+                hover:text-gray-700 "" data-inline=" false" data-icon="ant-design:home-outlined"></span>
+            </a>
+            <a href="/messages" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ri:messenger-line"></span>
+            </a>
+          
+            <a href="/add-post" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="ic:baseline-post-add"></span>
+            </a>
 
-        <a href="/settings.html" class="block py-1 px-1">
-          <span
-            class="iconify text-3xl text-gray-600 text-blue-400 hover:text-gray-700"
-            data-inline=" false"
-            data-icon="gridicons:menu"
-          ></span>
-        </a>
-      </nav>
+            <a href="/settings" class="block py-1 px-1">
+                <span class="iconify text-3xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
+                    data-icon="gridicons:menu"></span>
+            </a>
+        </nav>
     </header>
-    <a href="/profile.html" class="block hover:bg-gray-200 border-b bg-white mt-1">
+    <a href="/profil" class="block hover:bg-gray-200 border-b bg-white mt-1">
 
         <div class="container mx-auto p-2 ">
             <div class="flex items-center">
@@ -89,7 +72,7 @@
                 </div>
 
                 <div class="flex flex-col h-12 justify-center ">
-                    <p class=" text-xl font-semibold leading-5 ">Hamza Gharbi</p>
+                    <p class=" text-xl font-semibold leading-5 "><%= user.Firstname %>  <%= user.Lastname %>  </p>
                     <h2 class=" text-xs text-gray-600 truncate">Consulter compte</h2>
                 </div>
             </div>
@@ -97,7 +80,7 @@
         </div>
     </a>
 
-    <a href="/update_user.html" class="block hover:bg-gray-200 border-b bg-white ">
+    <a href="/update-user" class="block hover:bg-gray-200 border-b bg-white ">
 
         <div class="container mx-auto p-2 ">
             <div class="flex items-center">
@@ -112,7 +95,7 @@
 
         </div>
     </a>
-    <a href="/logout.html" class="block hover:bg-gray-200 border-b bg-white ">
+    <a href="/logout" class="block hover:bg-gray-200 border-b bg-white ">
 
         <div class="container mx-auto p-2 ">
 
