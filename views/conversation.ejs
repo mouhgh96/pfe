@@ -28,7 +28,7 @@
               class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src="/profilPicture/<%= user.img %>"
                 alt="pfe logo"
               />
             </div>
@@ -86,7 +86,7 @@
       <script src="/socket.io/socket.io.js"></script>
 <script>
   const socket=io();
-const outPut=function(msg,emails){
+const outPut=function(msg,emails,imgs){
   const div=document.createElement("div");
  if(emails!=email){
   div.innerHTML=`
@@ -95,7 +95,7 @@ const outPut=function(msg,emails){
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src=${imgs}
                 alt="pfe logo"
               />
             </div>
@@ -118,7 +118,7 @@ const outPut=function(msg,emails){
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src=${imgs}
                 alt="pfe logo"
               />
             </div>
@@ -126,25 +126,25 @@ const outPut=function(msg,emails){
             document.querySelector(".messages").appendChild(div);
   }
 }
-  socket.on('message',(message,email)=>{
-    outPut(message,email);
+socket.on('message',(message,email,imgs)=>{
+    outPut(message,email,imgs);
     //chatMessage.scrollTop=chatMessage.scrollHeight;
 })
-
       let username= `<%= user.Firstname %>`
       let email=`<%= user.email %>`
       let lastname=`<%= user.Lastname %>`
       let role=`<%= user.role %>`
+      let img="/profilPicture/<%= user.img %>";
   if(role=="admin"){
       lastname= lastname.concat("⭐")
       console.log(lastname)
                   }
       let room=location.pathname.split("")[14]
-      socket.emit("joined",{username,lastname,email,room});
+socket.emit("joined",{username,lastname,email,room,img});
 socket.on("afficherMsg",(result)=>{
   result.forEach(element=>{
     if(element.email==email){
-    console.log("kifkif")
+    //console.log("kifkif")
       const div=document.createElement("div");
       div.innerHTML=`
       <div class='flex w-full mt-4 justify-end'>
@@ -157,7 +157,7 @@ socket.on("afficherMsg",(result)=>{
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src=${element.pdp}
                 alt="pfe logo"
               />
             </div>
@@ -172,7 +172,7 @@ socket.on("afficherMsg",(result)=>{
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src=${element.pdp}
                 alt="pfe logo"
               />
             </div>
@@ -192,7 +192,7 @@ button.addEventListener("click",function(e){
   let message=document.getElementById("message-sent").value;
   let ins=document.getElementById("message-sent");
   console.log(message)
-  socket.emit('onMessage',message,username,email,lastname,role,room);
+  socket.emit('onMessage',message,username,email,lastname,role,room,img);
    //clear the input
     ins.value='';
    

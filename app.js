@@ -46,7 +46,7 @@ app.use(cookieParser());
 app.use('/', require("./router"));
 //socket.io
 io.on('connection',socket=>{
-socket.on("joined",async ({username,lastname,email,room})=>{
+socket.on("joined",async ({username,lastname,email,room,img})=>{
   trouver(email,function(verif,res){
     if(verif==true) socket.disconnect();
     if(verif==false){
@@ -55,7 +55,7 @@ socket.on("joined",async ({username,lastname,email,room})=>{
       if(number!=0){  
         lastname=lastname.concat(number) 
       }*/
-      joinChat(socket.id,username,lastname,email,room,function(element){
+      joinChat(socket.id,username,lastname,email,room,img,function(element){
         console.log(element)
         socket.join(element.room);
        // dede()
@@ -67,9 +67,9 @@ socket.on("joined",async ({username,lastname,email,room})=>{
     }
   })
   //message
-  socket.on("onMessage",(message,username,email,lastname,role,room)=>{
-      io.to(room).emit("message",message,email);
-      storeMsg(room,email,username,lastname,message);
+  socket.on("onMessage",(message,username,email,lastname,role,room,img)=>{
+      io.to(room).emit("message",message,email,img);
+      storeMsg(room,email,username,lastname,message,img);
     })
   //disconnect
 socket.on("disconnect",()=>{

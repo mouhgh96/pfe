@@ -17,7 +17,8 @@ var userSchema = mongoose.Schema({
   username: String, 
   lastname: String, 
   email: String, 
-  room: String   
+  room: String,
+  img:String   
 }); 
 var users2 = mongoose.model('user', userSchema);
 const nodemailer=require("nodemailer");
@@ -127,7 +128,7 @@ const userLeave=function (id,cb) {
   }
 
 //join the chat
-const joinChat=function (id,username,lastname,email,room,cb) {
+const joinChat=function (id,username,lastname,email,room,img,cb) {
     //const user={id,username,lastname,email,room};
     //users.push(user);
     var user2=new users2();
@@ -136,6 +137,7 @@ const joinChat=function (id,username,lastname,email,room,cb) {
     user2.lastname=lastname;
     user2.email=email;
     user2.room=room;
+    user2.img=img;
     user2.save(function(err,product){
       if(err){
         console.log(err);
@@ -172,8 +174,8 @@ const formatMessage=function(id,email,username,lastname,text){
   })
   }
 //store message into DB
-function storeMsg(room,email,username,lastname,message){ 
-  connection.query(`INSERT INTO room${room} SET email=?,username=?,lastname=?,message=?,time=?,date=?`,[email,username,lastname,message,new Date().toLocaleTimeString(),new Date().toLocaleDateString()],(err,result)=>{
+function storeMsg(room,email,username,lastname,message,img){ 
+  connection.query(`INSERT INTO room${room} SET pdp=?,email=?,username=?,lastname=?,message=?,time=?,date=?`,[img,email,username,lastname,message,new Date().toLocaleTimeString(),new Date().toLocaleDateString()],(err,result)=>{
       if(err) throw err;
   })
    }

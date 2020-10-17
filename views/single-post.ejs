@@ -49,7 +49,7 @@
     </header>
 <% if (locals.post) { %>
     <div class="mt-4">
-		<% if (locals.post.path) { %>
+		<% if (locals.post.path.lenght) { %>
 		<section class="h-64 flex justify-center">
 		<img
           src=`<%= locals.post.path %> `
@@ -143,10 +143,10 @@
 		 		<img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
 		 	</div><!-- the input field --><div class="input_comment">
 				
-				<!-- le formulaire manquait et le button submit également(à styliser) --> 
+				
 				<form action="" method="POST">
 					<input type="text" name="commentText" placeholder="Ajouter un commentaire">
-					<button type="submit">Submit</button>
+          <input type="submit" class="hidden">
 				 </form>
 		 	</div>
 

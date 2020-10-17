@@ -11,16 +11,17 @@
 </head>
 
 <body class="bg-gray-100">
-    <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="" class="image-cover h-full w-full object-center object-cover">
+    <img src="/profilPicture/<%= user.img %>" alt="" class="image-cover h-full w-full object-center object-cover">
     <div class="bg-white shadow-md">
         <div class="container mx-auto p-2">
             <div class="flex items-center">
                 <div class="border-4 border-blue-400 rounded-full  h-32 w-32 flex">
-                    <img class="object-center rounded-full w-full" alt="A" src="https://randomuser.me/api/portraits/women/75.jpg">
+                    <img class="object-center rounded-full w-full" alt="A" src="/profilPicture/<%= user.img %>">
 
-                    <form action="" method="post">
-                        <input type="file" name="profilePicture" id="profilePicture" class="hidden" accept="image/*">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="file" name="profilePicture" id="profilePicture" class="hidden" accept="image/png, image/jpeg">
                         <label for="profilePicture" id="addPhotoLabel" class="cursor-pointer"><span class="iconify" data-icon="bi:camera-fill" data-inline="false"></span></label>
+                        <input type="submit" >
                     </form>
                 </div>
                 <div class=" ml-4">
@@ -74,7 +75,7 @@
        
                    <hr>
                    <div>
-                       <a href=" #ouvrir_les_commentaire " class=" block py-1 px-1 flex justify-center items-center ">
+                       <a href=" /post/<%= posts[index].ID %>" class=" block py-1 px-1 flex justify-center items-center ">
        
                            <span class=" block iconify text-2xl text-gray-600 hover:text-gray-700 "" data-inline=" false"
                                data-icon="icons8:comments"></span>

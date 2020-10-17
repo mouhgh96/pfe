@@ -29,7 +29,7 @@ router.get("/signup",function(req,res){
 router.get("/index",isLoggedIn,function(req,res){
     connection.query("SELECT * FROM posts",function(err,result){
         if(err) throw err;
-        res.render("index",{posts:result})
+        res.render("index",{user:req.user,posts:result})
     })
     })
 router.get("/add-post",isLoggedIn,function(req,res){
@@ -39,13 +39,13 @@ router.get("/settings",isLoggedIn,function(req,res){
     res.render("settings",{user:req.user})
 })
 router.get('/profil',isLoggedIn,function(req,res){
-    connection.query("SELECT * FROM posts WHERE email=?",[req.user.email],function(err,result){
+  connection.query("SELECT * FROM posts WHERE email=?",[req.user.email],function(err,result){
         if (err) throw err;
         res.render("profil",{user:req.user,posts:result})
     })
 })
 router.get("/messages",isLoggedIn,function(req,res){
-    res.render("messages")
+    res.render("messages",{user:req.user})
 })
 router.get('/update-user',isLoggedIn,function(req,res){
     res.render("update-user")
@@ -160,6 +160,23 @@ router.post("/update-user",isLoggedIn,function(req,res){
    })
     
 })
+router.post("/profil",isLoggedIn,function(req,res){
+  upload2(req, res, (err) => {
+    if(err){
+      console.log(err)
+      res.redirect("/profil");
+    }else{
+      if(req.file == undefined){
+        res.redirect("/profil");
+      }else{
+        connection.query("UPDATE users SET img=? WHERE email=?",[req.file.filename,req.user.email],function(err,result){
+          if(err) throw err;
+        })
+        res.redirect("/profil")
+      } 
+    } 
+  });
+})
 //verification function
 function isLoggedIn(req, res, next){
         if(req.isAuthenticated())
@@ -169,10 +186,41 @@ function isLoggedIn(req, res, next){
        }
 //multer
 // Set The Storage Engine
+const storage2 = multer.diskStorage({
+  destination: './public/profilPicture/',
+  filename: function(req, file, cb){
+    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+// Init Upload
+const upload2 = multer({
+  storage: storage2,
+  limits:{fileSize: 1000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('profilePicture');
+// Check File Type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
+
+// Set The Storage Engine
 const storage = multer.diskStorage({
     destination: './public/uploads/',
     filename: function(req, file, cb){
-      cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+      cb(null,file.fieldname + '-'+ Date.now() + path.extname(file.originalname));
     }
   });
   // Init Upload
