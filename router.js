@@ -5,8 +5,8 @@ let mysql=require('mysql');
 var dbconfig = require('./database');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
-const redis=require("redis");
-const client = redis.createClient();
+//const redis=require("redis");
+//const client = redis.createClient();
 const moment=require("moment")
 let now=moment();
 const bcrypt = require('bcrypt')
@@ -61,7 +61,7 @@ router.get("/conversation/:number",isLoggedIn,function(req,res){
 router.get('/404',function(req,res){
     res.render("404")
 })
-//not certain
+
 router.get("/post/:id",isLoggedIn,function(req,res){
     connection.query("SELECT * FROM posts WHERE ID=?",[req.params.id],function(err,result){
         if(err) throw err;
@@ -72,6 +72,44 @@ router.get("/post/:id",isLoggedIn,function(req,res){
         
     })
     
+})
+router.get("/dash",isLoggedIn,function(req,res){
+  if(req.user.role=="admin"){
+    connection.query("SELECT * FROM users WHERE role=?",["user"],function(err,result){
+      if(err) throw err;
+      res.render("dash",{users:result,user:req.user})
+    })
+  }
+  else{
+    res.redirect("/404")
+  }
+})
+router.get("/dash/email/:email",isLoggedIn,function(req,res){
+  if(req.user.role=='admin'){
+    res.render("dash-email",{email:req.params.email});
+  }
+  else{
+    res.redirect("/404");
+  }
+})
+router.get('/dash/show/admins',isLoggedIn,function(req,res){
+  if(req.user.role=="admin"){
+  connection.query("SELECT * FROM users WHERE role=?",["admin"],function(err,result){
+    if(err) throw err;
+    res.render("dash-admins",{user:req.user,admins:result});
+  })
+  }
+  else res.redirect("/404")
+})
+router.get("/dash/delete/:id",isLoggedIn,function(req,res){
+  if(req.user.role=="admin"){
+connection.query("DELETE FROM users WHERE id=?",[req.params.id],function(err,result){
+  if(err) throw err;
+  res.redirect("/dash")
+})
+  }else{
+    res.redirect("/404")
+  }
 })
 //disconnect
 router.get('/logout', (req, res) => {
@@ -176,6 +214,10 @@ router.post("/profil",isLoggedIn,function(req,res){
       } 
     } 
   });
+})
+router.post("/dash-email/:email",isLoggedIn,function(req,res){
+  sendEmail(req.params.email,req.body.email);
+  res.redirect("/dash")
 })
 //verification function
 function isLoggedIn(req, res, next){

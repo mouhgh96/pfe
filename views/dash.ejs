@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css2/css2.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="parent">
+        <header class="header">
+            <a href="/dash">DASHBOARD</a>
+        </header>
+          <div class="left">
+        <ul>
+            
+            <li><a href="/dash/show/reports">Reports</a></li>
+            <li><a href="/dash/show/admins">List of admins</a></li>
+        </ul>  
+        </div>
+          <main class="main">
+        <% if (locals.users) { %>
+         <% for( let index = 0; index < users.length; index++ ) { %>
+            <div class="user">
+                <span>ID:<%= users[index].id %> </span>
+                <span>Email:<%= users[index].email %></span>
+                <span>Firstname:<%= users[index].Firstname %></span>
+                <span>Lastname:<%= users[index].Lastname %></span>
+                <span>Sex:<%= users[index].sex %></span>
+                <span>Inscription date:<%= users[index].date %></span>
+                <span>Account situation:<%= users[index].activated %></span>
+            <span><button><a href="/dash/email/<%= users[index].email %>">Send email</a></button> <button><a href="/dash/delete/<%= users[index].id %>">Delete user</a></button></span>
+            </div> 
+         <% } %>
+        <% } %>
+        </main>
+          <div class="right">
+          </div>
+          <div class="footer">
+    
+          </div>
+      </div>
+</body>
+</html>

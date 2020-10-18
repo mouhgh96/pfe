@@ -1,5 +1,5 @@
-const redis=require("redis");
-const client = redis.createClient();
+//const redis=require("redis");
+//const client = redis.createClient();
 const users=[];
 const kick=[];
 const mongoose=require("mongoose");

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css2/css2.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="parent">
+        <header class="header">
+            <a href="/dash">DASHBOARD</a>
+        </header>
+          <div class="left">
+        <ul>
+            
+            <li><a href="/dash/show/reports">Reports</a></li>
+            <li><a href="/dash/show/admins">List of admins</a></li>
+        </ul>  
+        </div>
+          <main class="main">
+       <form action="/dash-email/<%= locals.email %> " method="POST">
+        <textarea name="email" id="email" cols="35" rows="15" placeholder="Enter your text here...">
+        </textarea><br>
+        <button type="submit">Send</button>
+        <button type="reset">Reset</button>
+        </form>
+        </main>
+          <div class="right">
+          </div>
+          <div class="footer">
+    
+          </div>
+      </div>
+</body>
+</html>

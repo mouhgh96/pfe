@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css2/css2.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="parent">
+        <header class="header">
+            <a href="/dash">DASHBOARD</a>
+        </header>
+          <div class="left">
+        <ul>
+            
+            <li><a href="/dash/show/reports">Reports</a></li>
+            <li><a href="/dash/show/admins">List of admins</a></li>
+        </ul>  
+        </div>
+          <main class="main">
+        <% if (locals.admins) { %>
+         <% for( let index = 0; index < admins.length; index++ ) { %>
+            <div class="user">
+                <span>Email:<%= admins[index].email %></span>
+                <span>Firstname:<%= admins[index].Firstname %></span>
+                <span>Lastname:<%= admins[index].Lastname %></span>
+                <span>Sex:<%= admins[index].sex %></span>
+                <span>Inscription date:<%= admins[index].date %></span> <br>
+                <br>
+            <span><button><a href="/dash/email/<%= admins[index].email %>">Send email</a></button></button></span>
+            </div> 
+         <% } %>
+        <% } %>
+        </main>
+          <div class="right">
+          </div>
+          <div class="footer">
+    
+          </div>
+      </div>
+</body>
+</html>

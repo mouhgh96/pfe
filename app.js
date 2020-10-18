@@ -3,8 +3,8 @@ let mysql=require('mysql');
 var dbconfig = require('./database');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
-const redis=require("redis");
-const client = redis.createClient();
+//const redis=require("redis");
+//const client = redis.createClient();
 const moment=require("moment")
 let now=moment();
 const path=require("path")
@@ -84,6 +84,6 @@ socket.on("disconnect",()=>{
 })
 })
 //PORTS
-const REDIS_PORT=6379||process.env.PORT;
+//const REDIS_PORT=6379||process.env.PORT;
 const PORT=8080||process.env.PORT;
 server.listen(PORT,()=>{console.log("server started running on port:"+PORT)});
