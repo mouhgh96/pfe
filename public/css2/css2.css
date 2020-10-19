@@ -65,7 +65,19 @@ body{
 }
 #email{
     resize: none;
-    
     outline: none;
     padding: 10px;
+}
+.add-form{
+    background-color: burlywood;
+    width: 50vh;
+    display: flex;
+    justify-content: center;
+    padding: 25px 0;
+    border-radius: 10px;
+}
+.add-form form{
+    display: flex;
+    flex-direction: column;   
+    width: 40vh;
 }

@@ -63,13 +63,16 @@ router.get('/404',function(req,res){
 })
 
 router.get("/post/:id",isLoggedIn,function(req,res){
-    connection.query("SELECT * FROM posts WHERE ID=?",[req.params.id],function(err,result){
+  connection.query("SELECT * FROM posts WHERE ID=?",[req.params.id],function(err,result){
         if(err) throw err;
-        connection.query("SELECT * FROM comments WHERE postID=?",[req.params.id],function(err,resu){
-           if(err) throw err;
-            res.render("single-post",{user:req.user,post:result[0],comments:resu});
+        connection.query("SELECT img FROM users WHERE email=?",[result[0].email],function(err,resusu){
+          if(err) throw err;
+          connection.query("SELECT * FROM comments WHERE postID=?",[req.params.id],function(err,resu){
+            if(err) throw err;
+      
+            res.render("single-post",{user:req.user,post:result[0],comments:resu,image:resusu[0]});
+         })
         })
-        
     })
     
 })
@@ -110,6 +113,60 @@ connection.query("DELETE FROM users WHERE id=?",[req.params.id],function(err,res
   }else{
     res.redirect("/404")
   }
+})
+router.get("/dash/add/admin",isLoggedIn,function(req,res){
+ if(req.user.role=="admin"){
+  res.render("dash-add-admin",{user:req.user});
+ }
+ else{
+   res.redirect("/404");
+ } 
+})
+
+router.get("/user/post/:idpost",isLoggedIn,function(req,res){
+  connection.query("SELECT email FROM posts WHERE ID=?",[req.params.idpost],function(err,result){
+    if(err) throw err;
+    if(result.length==0) res.redirect("/404");
+    else{
+      if(result[0].email==req.user.email) res.redirect("/profil");
+      else{
+        connection.query("SELECT * FROM users WHERE email=?",[result[0].email],function(err,resu){
+          if(err) throw err;
+          console.log(resu[0])
+          if(resu.length==0) res.redirect("/404");
+          else{
+            connection.query("SELECT * FROM posts WHERE email=?",[result[0].email],function(err,resi){
+              if(err) throw err
+              res.render("user",{user:req.user,userp:resu,posts:resi})
+            })
+            
+          }
+        })
+      }
+    }
+  })
+})
+router.get("/user/:idcom",isLoggedIn,function(req,res){
+  connection.query("SELECT email FROM comments WHERE ID=?",[req.params.idcom],function(err,result){
+    if(err) throw err;
+    if(result.length==0) res.redirect("/404");
+    else {
+      if(result[0].email==req.user.email) res.redirect("/profil");
+      else {
+        connection.query("SELECT * FROM users WHERE email=?",[result[0].email],function(err,resu){
+          if(err) throw err;
+          if(resu.length==0) res.redirect("/404");
+          else{
+            connection.query("SELECT * FROM posts WHERE email=?",[result[0].email],function(err,resuu){
+              if(err) throw err;
+              res.render("user",{user:req.user,userp:resu,posts:resuu})
+            })
+            
+          }
+        })
+      }
+    }
+  })
 })
 //disconnect
 router.get('/logout', (req, res) => {
@@ -218,6 +275,27 @@ router.post("/profil",isLoggedIn,function(req,res){
 router.post("/dash-email/:email",isLoggedIn,function(req,res){
   sendEmail(req.params.email,req.body.email);
   res.redirect("/dash")
+})
+router.post("/dash/add/admin",isLoggedIn,function(req,res){
+ if(req.user.role=="admin"){
+  if(!validator.isEmail(req.body.email)){res.render("dash-add-admin",{message:"Email erroned"})}
+  if(req.body.password.length<8){res.render("dash-add-admin",{message:"Your password must contain atleast 8 characters"})}
+  if(validator.isEmail(req.body.email)&&req.body.password.length>=8){
+    connection.query(`SELECT * FROM users WHERE email=?`,[req.body.email],async function (err,rows) {
+      if(err) throw err;
+      if(rows.length){res.render('dash-add-admin',{message:"You are already registred"})}
+      else{
+         let HPSW=bcrypt.hashSync(req.body.password, 10, null)
+         let activated=1;
+      connection.query("INSERT INTO users (Firstname,Lastname,email, password,activated,role,sex) values (?,?,?,?,?,?,?)",[req.body.prenom,req.body.nom,req.body.email,HPSW,activated,'admin',req.body.sex],function(err,rows) { 
+       if(err) throw err;
+       res.redirect("/dash")
+      })
+     }
+   })
+}
+ }
+  else res.redirect("/404");
 })
 //verification function
 function isLoggedIn(req, res, next){

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css2/css2.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="parent">
+        <header class="header">
+            <a href="/dash">DASHBOARD</a>
+        </header>
+          <div class="left">
+        <ul>
+            
+            <li><a href="/dash/show/reports">Reports</a></li>
+            <li><a href="/dash/show/admins">List of admins</a></li>
+            <li><a href="/dash/add/admin">Add admin</a></li>
+        </ul>  
+        </div>
+          <main class="main">
+            <div style="color:red;"> <% if (locals.message) { %>
+                <span ><%= message %></span>
+              <% } %></div>
+        <div class="add-form">
+            
+            <form action="" method="post">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" id="name" required>
+                <label for="prenom">Prénom</label>
+                <input type="text" name="prenom" id="prenom" required>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="Email" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+               <div>
+                <label for="Homme">Homme</label>
+                <input type="radio" name="sex" id="Homme" value="homme" required checked>
+                <label for="Femme">Femme</label>
+                <input type="radio" name="sex" id="Femme" value="femme" required>
+               </div>
+                
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </form>
+        </div>
+        </main>
+          <div class="right">
+          </div>
+          <div class="footer">
+    
+          </div>
+      </div>
+</body>
+</html>
