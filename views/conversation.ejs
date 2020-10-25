@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Document</title>
       <link rel="stylesheet" href="/css/tailwind.css" />
+      <link rel="stylesheet" href="/css/conversation.css" />
       <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
     </head>
   
@@ -59,28 +60,59 @@
               </a>
           </nav>
       </header>
-      <main class="flex flex-col flex-1">
-        <div class="mt-2">
-          <div class="bg-white py-2 border-b-2 border-blue-400">
-           
-          </div>
-        </div>
-        <div
-          class="flex-1 messages container mx-auto px-2 pb-2 overflow-y-visible"
-        >
-        </div>
-        <div class="bg-white border-t-2 border-blue-400">
-          <div class="mt-auto container mx-auto px-2 flex items-stretch">
-            <input type="text" placeholder="..." class="block flex-1 px-2" id="message-sent" required/>
-  
-            <button id="envoie" class="ml-auto block py-1 px-1" type="submit">
+    
+        <main class="Conversation">
+        <div class="Conversation__left border-r-2 border-blue-400">
+            <div class="bg-white py-3 px-3 border-b-2 border-blue-400">
+                <form method="GET" action="/chouf-nta" class="Conversation__left--search border-2 border-blue-400">
+                    <input type="text" name="search" class="Conversation__left--search__input text-gray-900" aria-label="search" placeholder="enter your search" />
+
+                    <button class="Conversation__left--search__submit" id="submit_search" aria-label="submit search" type="submit">
               <span
-                class="iconify text-3xl text-blue-600 hover:text-gray-700"
-                data-inline=" false"
-                data-icon="carbon:send-filled"
+                class="iconify"
+                data-icon="bx:bx-search-alt-2"
+                data-inline="false"
               ></span>
             </button>
-          </div>
+                </form>
+            </div>
+            <a href="/conversation.html" class="Conversation__left-item block hover:bg-gray-200 border-b bg-white">
+                <div class="bg-blue-500 border-2 float-left h-12 m-1 mr-2 relative rounded-full text-white text-xl w-12">
+                    <img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/75.jpg" />
+                    <div class="bg-green-500 rounded-full w-3 h-3 absolute bottom-0 right-0"></div>
+                </div>
+
+                <div class="flex flex-col h-12 justify-center ml-2">
+                    <p class="text-xl font-semibold leading-5">Cardiologie</p>
+                    <h2 class="text-xs text-gray-600 truncate">
+                        hadi matensach tbedelha .
+                    </h2>
+                </div>
+            </a>
+        </div>
+        <div class="Conversation__right flex flex-col">
+            <div class="bg-white py-2 border-b-2 border-blue-400">
+                <div class="bg-white py-2 border-b-2 border-blue-400">
+           
+                </div>
+             </div>
+            <div
+              class="flex-1 messages container mx-auto px-2 pb-2 overflow-y-visible"
+            >
+            </div>
+            <div class="bg-white border-t-2 border-blue-400">
+              <div class="mt-auto container mx-auto px-2 flex items-stretch">
+                <input type="text" placeholder="..." class="block flex-1 px-2" id="message-sent" required/>
+
+                <button id="envoie" class="ml-auto block py-1 px-1" type="submit">
+                  <span
+                    class="iconify text-3xl text-blue-600 hover:text-gray-700"
+                    data-inline=" false"
+                    data-icon="carbon:send-filled"
+                  ></span>
+                </button>
+              </div>
+            </div>
         </div>
       </main>
       <script src="/socket.io/socket.io.js"></script>
