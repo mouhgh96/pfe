@@ -124,6 +124,9 @@ connection.query("SELECT * FROM users WHERE id=?",[req.params.id],function(err,r
     connection.query("DELETE FROM posts WHERE email=?",[resultat[0].email],function(err,ret){
       if(err) throw err;
     })
+    connection.query("DELETE FROM comments WHERE email=?",[resultat[0].email],function(err,re){
+      if(err) throw err;
+    })
   }
   res.redirect("/dash")
 })
