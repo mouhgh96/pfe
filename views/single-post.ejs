@@ -18,7 +18,12 @@
                 <div class="flex-1 mx-8"><input class="border-gray-500 border px-1 py-1 bg-gray-300 w-full" type="search" name="filter" id="filter" placeholder="Recherche ...">
                 </div>
                 <div class="logo h-12 w-12
-                rounded-full border border-blue-400 overflow-hidden"><img src="/profilPicture/<%= user.img %>"  alt="pfe logo">
+                rounded-full border border-blue-400 overflow-hidden">
+                <% if (locals.user.img) { %>
+                  <img src="/profilPicture/<%= user.img %>"  alt="pfe logo">
+                <% }else{ %>
+                  <img src="/back.jpg"  alt="pfe logo">
+                  <% } %>
                 </div>
             </div>
         </div>
@@ -64,11 +69,19 @@
           <div
             class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
           >
+          <% if (image.img) { %>
             <img
               class="object-center"
               src="/profilPicture/<%= image.img %>"
-              alt=" profile "
+              alt="  "
             />
+          <% }else{ %>
+            <img
+              class="object-center"
+              src="/back.jpg"
+              alt="  "
+            />
+            <% } %>
           </div>
           <div class="info ml-2 flex flex-col items-start justify-center">
            <a href="/user/post/<%= locals.post.ID %>"> <p class="text-xl font-semibold leading-5"><%= locals.post.firstname %>  <%= locals.post.lastname %></p></a>
@@ -77,12 +90,7 @@
             >
           </div>
           <div class="ml-auto">
-            <a
-              href=" #lien_pour_le_post "
-              class="block t text-blue-400 py-1 px-4 font-black tracking-wider rounded-lg text-xl"
-            >
-              Specialité
-            </a>
+            
           </div>
         </div>
 
@@ -134,7 +142,11 @@
 
 			<!-- current #{user} avatar -->
 		 	<div class="user_avatar">
-		 		<img src="/profilPicture/<%= image.img %>">
+         <% if (locals.user.img) { %>
+          <img src="/profilPicture/<%= user.img %>">
+         <% } else{%>
+          <img src="/back.jpg">
+         <% } %>
        </div><!-- the input field -->
         
        <div class="input_comment">

@@ -11,16 +11,25 @@
 </head>
 
 <body class="bg-gray-100">
+   <% if (locals.userp[0].img) { %>
     <img src="/profilPicture/<%= userp[0].img %>" alt="" class="image-cover h-full w-full object-center object-cover">
+   <% }else{ %>
+    <img src="/back.jpg" alt="" class="image-cover h-full w-full object-center object-cover">
+   <% } %>
+   
     <div class="bg-white shadow-md">
         <div class="container mx-auto p-2">
             <div class="flex items-center">
                 <div class="border-4 border-blue-400 rounded-full  h-32 w-32 flex">
-                    <img class="object-center rounded-full w-full" alt="A" src="/profilPicture/<%= userp[0].img %>">
+                    <% if (locals.userp[0].img) { %>
+                        <img class="object-center rounded-full w-full" alt="A" src="/profilPicture/<%= userp[0].img %>">
+                    <% }else{ %>
+                        <img class="object-center rounded-full w-full" alt="A" src="/back.jpg">
+                    <% } %>
                 </div>
                 <div class=" ml-4">
                     <h1 class="text-2xl font-bold tracking-black text-gray-800"><%= userp[0].Firstname %>  <%= userp[0].Lastname %></h1>
-                   
+                   <h3><%= userp[0].speciality %></h3>
                 </div>
             </div>
             <div class="profile-info flex justify-between items-baseline mt-4">
@@ -35,7 +44,7 @@
                <section class="rounded-lg overflow-hidden my-4 bg-white shadow-xl ">
                    <div class=" border h-64 ">
                     <% if (posts[index].path) { %>
-                        <img src=" /uploads/<%= posts[index].path %> " alt=" " class=" object-cover object-center w-full h-full ">
+                        <img src=" /uploads/<%= posts[index].path %> " alt="/back.jpg" class=" object-cover object-center w-full h-full ">
                     <% } else{%>
                         <img src=" /back.jpg " alt=" " class=" object-cover object-center w-full h-full ">
                         <% } %>

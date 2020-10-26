@@ -33,7 +33,7 @@ router.get("/index",isLoggedIn,function(req,res){
     })
     })
 router.get("/add-post",isLoggedIn,function(req,res){
-    res.render("add-post")
+    res.render("add-post",{user:req.user})
 })
 router.get("/settings",isLoggedIn,function(req,res){
     res.render("settings",{user:req.user})
@@ -45,7 +45,8 @@ router.get('/profil',isLoggedIn,function(req,res){
     })
 })
 router.get("/messages",isLoggedIn,function(req,res){
-    res.render("messages",{user:req.user})
+  console.log(req.user)  
+  res.render("messages",{user:req.user})
 })
 router.get('/update-user',isLoggedIn,function(req,res){
     res.render("update-user")
@@ -56,8 +57,10 @@ router.get("/conversation/:number",isLoggedIn,function(req,res){
         //console.log(req.user)
         res.render("conversation",{msgs:result,user:req.user});
     })*/
-    res.render("conversation",{user:req.user});
-})
+    if(req.params.number=="General")res.render("conversation",{user:req.user});
+    else if(req.params.number==req.user.speciality)res.render("conversation",{user:req.user});
+    else res.redirect("/404")
+  })
 router.get('/404',function(req,res){
     res.render("404")
 })
@@ -106,10 +109,28 @@ router.get('/dash/show/admins',isLoggedIn,function(req,res){
 })
 router.get("/dash/delete/:id",isLoggedIn,function(req,res){
   if(req.user.role=="admin"){
-connection.query("DELETE FROM users WHERE id=?",[req.params.id],function(err,result){
+connection.query("SELECT * FROM users WHERE id=?",[req.params.id],function(err,resultat){
   if(err) throw err;
+  if(resultat.length!=0){
+    connection.query("DELETE FROM users WHERE id=?",[resultat[0].id],function(err,result){
+      if(err) throw err;
+    })
+    connection.query("DELETE FROM General WHERE email=?",[resultat[0].email],function(err,resu){
+      if(err) throw err;
+    })
+    connection.query(`DELETE FROM ${resultat[0].speciality.replace(20,"").replace("%","").replace("-","")} WHERE email=?`,[resultat[0].email],function(err,resusu){
+      if(err) throw err;
+    })
+    connection.query("DELETE FROM posts WHERE email=?",[resultat[0].email],function(err,ret){
+      if(err) throw err;
+    })
+  }
   res.redirect("/dash")
 })
+/*connection.query("DELETE FROM users WHERE id=?",[req.params.id],function(err,result){
+  if(err) throw err;
+  res.redirect("/dash")
+})*/
   }else{
     res.redirect("/404")
   }
@@ -169,7 +190,7 @@ router.get("/user/:idcom",isLoggedIn,function(req,res){
   })
 })
 //disconnect
-router.get('/logout', (req, res) => {
+router.get('/logout',isLoggedIn, (req, res) => {
     req.logOut()
     res.redirect('/')
   })
@@ -186,7 +207,8 @@ router.post("/registered",function(req,res){
            let toto=await random.int(1,1000000);
             let HPSW=bcrypt.hashSync(req.body.password, 10, null)
             let activated=false;
-         connection.query("INSERT INTO users (Firstname,Lastname,email, password,activated,akey,role,sex) values (?,?,?,?,?,?,?,?)",[req.body.firstname,req.body.lastname,req.body.email,HPSW,activated,toto,'user',req.body.sex],function(err,rows) { 
+            //console.log(req.body)
+         connection.query("INSERT INTO users (Firstname,Lastname,email,speciality,password,activated,akey,role,sex) values (?,?,?,?,?,?,?,?,?)",[req.body.firstname,req.body.lastname,req.body.email,req.body.speciality,HPSW,activated,toto,'user',req.body.sex],function(err,rows) { 
           if(err) throw err;
        main(req.body.email,toto);
           res.redirect("/")

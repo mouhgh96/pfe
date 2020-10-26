@@ -11,12 +11,20 @@
 </head>
 
 <body class="bg-gray-100">
-    <img src="/profilPicture/<%= user.img %>" alt="" class="image-cover h-full w-full object-center object-cover">
+    <% if (locals.user.img) { %>
+        <img src="/profilPicture/<%= user.img %>" alt="" class="image-cover h-full w-full object-center object-cover">
+    <% }else{ %>
+        <img src="/back.jpg" alt="" class="image-cover h-full w-full object-center object-cover">
+        <% } %>
     <div class="bg-white shadow-md">
         <div class="container mx-auto p-2">
             <div class="flex items-center">
                 <div class="border-4 border-blue-400 rounded-full  h-32 w-32 flex">
-                    <img class="object-center rounded-full w-full" alt="A" src="/profilPicture/<%= user.img %>">
+                    <% if (locals.user.img) { %>
+                        <img class="object-center rounded-full w-full" alt="A" src="/profilPicture/<%= user.img %>">
+                    <% }else{ %>
+                        <img src="/back.jpg" alt="" class="object-center rounded-full w-full">
+                        <% } %>
 
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="file" name="profilePicture" id="profilePicture" class="hidden" accept="image/png, image/jpeg">
@@ -50,7 +58,11 @@
             <% for( let index = 0; index < posts.length; index++ ) { %>
                <section class="rounded-lg overflow-hidden my-4 bg-white shadow-xl ">
                    <div class=" border h-64 ">
-                       <img src=" https://picsum.photos/200/300 " alt=" " class=" object-cover object-center w-full h-full ">
+                    <% if (locals.posts[index].path) { %>
+                        <img src="  /uploads/<%= posts[index].path %> " alt=" " class=" object-cover object-center w-full h-full ">
+                    <% }else{ %>
+                        <img src="  /back.jpg " alt=" " class=" object-cover object-center w-full h-full ">   
+                    <% } %>  
                    </div>
        
                    <article class="  p-2 ">
@@ -58,7 +70,11 @@
                            post ici ou cas ou le titre est trop long pour une ligne "><%= posts[index].title %> </a>
                        <div class=" flex items-center mt-2">
                            <div class=" logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden ">
-                               <img class=" object-center " src=" /image/profile.jpg " alt=" profile ">
+                            <% if (locals.user.img) { %>
+                                <img class=" object-center " src="/profilPicture/<%= user.img %> " alt=" profile ">
+                            <% } else{%>
+                                <img class=" object-center " src="/back.jpg " alt=" profile ">
+                            <% } %>   
                            </div>
                            <div class=" info ml-2 flex flex-col items-start justify-center ">
                                <p class=" text-xl font-semibold leading-5 "><%= posts[index].firstname %>  <%= posts[index].lastname %> </p>

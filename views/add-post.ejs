@@ -31,10 +31,17 @@
           <div
             class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
           >
+          <% if (locals.user.img) { %>
             <img
-              src="https://randomuser.me/api/portraits/men/75.jpg"
-              alt="pfe logo"
-            />
+            src="/profilPicture/<%= user.img %>"
+            alt="pfe logo"
+          />
+          <% }else { %>
+            <img
+            src="/back.jpg"
+            alt="pfe logo"
+          />
+          <% } %>
           </div>
         </div>
       </div>

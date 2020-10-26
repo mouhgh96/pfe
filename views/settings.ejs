@@ -29,10 +29,12 @@
           <div
             class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
           >
-            <img
-              src="/profilPicture/<%= user.img %>"
-              alt="pfe logo"
-            />
+          <% if (locals.user.img) { %>
+            <img src="/profilPicture/<%= user.img %>" alt="pfe logo">
+        <% }else{ %>
+            <img src="/back.jpg" alt="pfe logo">
+            <% } %>
+            
           </div>
         </div>
       </div>
@@ -67,7 +69,12 @@
             <div class="flex items-center">
 
                 <div class="bg-blue-500 border-2  h-12 m-1 mr-2 relative rounded-full text-white text-xl w-12">
-                    <img class="rounded-full" alt="A" src="/profilPicture/<%= user.img %>">
+                    <% if (locals.user.img) { %>
+                        <img class="rounded-full" src="/profilPicture/<%= user.img %>" >
+                    <% }else{ %>
+                        <img class="rounded-full" src="/back.jpg" alt="pfe logo">
+                        <% } %>
+                    
 
                 </div>
 

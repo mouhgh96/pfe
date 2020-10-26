@@ -27,10 +27,12 @@
             <div
               class="logo h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
-              <img
-                src="/profilPicture/<%= user.img %>"
-                alt="pfe logo"
-              />
+            <% if (locals.user.img) { %>
+              <img src="/profilPicture/<%= user.img %>" alt="pfe logo">
+          <% } else{%>
+              <img src="/back.jpg" alt="pfe logo">
+              <% } %>
+              
             </div>
           </div>
         </div>
@@ -95,7 +97,7 @@ const outPut=function(msg,emails,imgs){
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src=${imgs}
+                src=${(imgs=='/profilPicture/')?"/back.jpg":imgs}
                 alt="pfe logo"
               />
             </div>
@@ -118,7 +120,7 @@ const outPut=function(msg,emails,imgs){
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src=${imgs}
+                src=${(imgs=='/profilPicture/')?"/back.jpg":imgs}
                 alt="pfe logo"
               />
             </div>
@@ -135,11 +137,14 @@ socket.on('message',(message,email,imgs)=>{
       let lastname=`<%= user.Lastname %>`
       let role=`<%= user.role %>`
       let img="/profilPicture/<%= user.img %>";
+      console.log(img)
   if(role=="admin"){
       lastname= lastname.concat("⭐")
       console.log(lastname)
                   }
-      let room=location.pathname.split("")[14]
+      //let room=location.pathname.split("")[14]
+      let room=location.pathname.slice(14).replace(20,"").replace("%","").replace("-","")
+      console.log(room)
 socket.emit("joined",{username,lastname,email,room,img});
 socket.on("afficherMsg",(result)=>{
   result.forEach(element=>{
@@ -156,8 +161,9 @@ socket.on("afficherMsg",(result)=>{
             <div
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
+            
               <img
-                src=${element.pdp}
+                src=${(element.pdp=='/profilPicture/')?"/back.jpg":element.pdp}
                 alt="pfe logo"
               />
             </div>
@@ -172,7 +178,7 @@ socket.on("afficherMsg",(result)=>{
               class="h-12 w-12 rounded-full border border-blue-400 overflow-hidden"
             >
               <img
-                src=${element.pdp}
+                src=${(element.pdp=='/profilPicture/')?"/back.jpg":element.pdp}
                 alt="pfe logo"
               />
             </div>

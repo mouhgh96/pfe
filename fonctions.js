@@ -160,7 +160,7 @@ const formatMessage=function(id,email,username,lastname,text){
 } 
 //bring old messages
  function oldMsg(socket,room){
-    connection.query(`SELECT* FROM room${room}`,async (err,result)=>{
+    connection.query(`SELECT* FROM ${room}`,async (err,result)=>{
     if(err) throw err;
    // let yoyo=ress[0]
         //let houhou=ress[1]
@@ -175,7 +175,7 @@ const formatMessage=function(id,email,username,lastname,text){
   }
 //store message into DB
 function storeMsg(room,email,username,lastname,message,img){ 
-  connection.query(`INSERT INTO room${room} SET pdp=?,email=?,username=?,lastname=?,message=?,time=?,date=?`,[img,email,username,lastname,message,new Date().toLocaleTimeString(),new Date().toLocaleDateString()],(err,result)=>{
+  connection.query(`INSERT INTO ${room} SET pdp=?,email=?,username=?,lastname=?,message=?,time=?,date=?`,[img,email,username,lastname,message,new Date().toLocaleTimeString(),new Date().toLocaleDateString()],(err,result)=>{
       if(err) throw err;
   })
    }
